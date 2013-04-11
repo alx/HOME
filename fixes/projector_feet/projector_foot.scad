@@ -1,21 +1,37 @@
+cylinder_height = 22;
+cylinder_size = 15;
+cylinder_wall = 5;
+
+flap_width = 23;
+flap_height = 2;
+
+hole_size = 2;
+hole_position = 25;
+
+hollow_height = cylinder_height * 4;
+hollow_size = cylinder_size - cylinder_wall;
+
+// Horizontal flap
 difference() {
   difference() {
-    translate(v = [0, 0, 1]) cube(size = [60, 20, 2], center = true);
-    translate(v = [22, 0, 1]) cylinder(h=20, r=2, center = true);
-    translate(v = [-22, 0, 1]) cylinder(h=20, r=2, center = true);
+    translate(v = [0, 0, flap_height / 2]) cube(size = [flap_width * 3, flap_width, flap_height], center = true);
+    translate(v = [hole_position, 0, flap_height / 2]) cylinder(h=20, r=hole_size, center = true);
+    translate(v = [-hole_position, 0, flap_height / 2]) cylinder(h=20, r=hole_size, center = true);
   }
-  cylinder(h=20, r=15, center = true);
+  cylinder(h=hollow_height, r=hollow_size, center = true);
 }
 
+// Third leg flap
 difference() {
   difference() {
-    translate(v = [0, 10, 1]) cube(size = [20, 40, 2], center = true);
-	translate(v = [0, 22, 1]) cylinder(h=20, r=2, center = true);
+    translate(v = [0, flap_width / 2, flap_height / 2]) cube(size = [flap_width, flap_width * 2, flap_height], center = true);
+	translate(v = [0, hole_position, flap_height / 2]) cylinder(h=20, r=hole_size, center = true);
   }
-  cylinder(h=20, r=15, center = true);
+  cylinder(h=20, r=hollow_size, center = true);
 }
 
+// Main cylinder
 difference() {
-  cylinder(h=22, r=15);
-  cylinder(h=80, r=10, center = true);
+  cylinder(h=cylinder_height, r=cylinder_size);
+  cylinder(h=hollow_height, r=hollow_size, center = true);
 }
